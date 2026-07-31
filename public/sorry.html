@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>I'm Sorry — 100,000 Times</title>
+<meta name="description" content="A heartfelt apology, written one hundred thousand times." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  /* ---------- Design tokens ---------- */
+  :root{
+    --blush:#ffd7e4;
+    --blush-deep:#ff9dbb;
+    --rose:#e5698f;
+    --cream:#fff7f2;
+    --lavender:#d9ccff;
+    --lavender-deep:#a892f0;
+    --ink:#5d4352;
+    --ink-soft:#8b7183;
+    --card:rgba(255,255,255,.55);
+    --border:rgba(255,255,255,.75);
+    --shadow:0 20px 60px -20px rgba(229,105,143,.45);
+    --radius:28px;
+    --font-body:'Quicksand',system-ui,sans-serif;
+    --font-display:'Pacifico',cursive;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+
+  body{
+    font-family:var(--font-body);
+    color:var(--ink);
+    min-height:100vh;
+    display:flex;align-items:center;justify-content:center;
+    padding:24px 16px;
+    background:
+      radial-gradient(1200px 600px at 15% 10%, var(--blush) 0%, transparent 60%),
+      radial-gradient(900px 700px at 90% 20%, var(--lavender) 0%, transparent 55%),
+      radial-gradient(900px 900px at 50% 110%, #ffe9d6 0%, transparent 60%),
+      var(--cream);
+    overflow-x:hidden;
+  }
+
+  /* ---------- Floating hearts (decorative, GPU friendly) ---------- */
+  .hearts{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+  .heart{
+    position:absolute;bottom:-60px;width:18px;height:18px;
+    background:var(--blush-deep);opacity:.5;
+    transform:rotate(45deg);border-radius:3px;
+    animation:float-up linear infinite;will-change:transform,opacity;
+  }
+  .heart::before,.heart::after{
+    content:"";position:absolute;width:18px;height:18px;border-radius:50%;background:inherit;
+  }
+  .heart::before{left:-9px}
+  .heart::after{top:-9px}
+  @keyframes float-up{
+    0%{transform:translate3d(0,0,0) rotate(45deg) scale(.6);opacity:0}
+    10%{opacity:.55}
+    100%{transform:translate3d(var(--drift,20px),-110vh,0) rotate(45deg) scale(1.1);opacity:0}
+  }
+
+  /* ---------- Card ---------- */
+  .card{
+    position:relative;z-index:1;
+    width:min(680px,100%);
+    background:var(--card);
+    backdrop-filter:blur(18px) saturate(140%);
+    -webkit-backdrop-filter:blur(18px) saturate(140%);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:clamp(28px,5vw,48px);
+    text-align:center;
+    animation:card-in .8s cubic-bezier(.2,.8,.25,1) both;
+  }
+  @keyframes card-in{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
+
+  /* Big CSS heart */
+  .big-heart{
+    width:74px;height:74px;margin:0 auto 18px;position:relative;
+    background:linear-gradient(160deg,var(--blush-deep),var(--rose));
+    transform:rotate(45deg);border-radius:8px;
+    box-shadow:0 12px 30px -8px rgba(229,105,143,.7);
+    animation:beat 1.9s ease-in-out infinite;
+  }
+  .big-heart::before,.big-heart::after{
+    content:"";position:absolute;width:74px;height:74px;border-radius:50%;
+    background:linear-gradient(160deg,var(--blush-deep),var(--rose));
+  }
+  .big-heart::before{left:-37px}
+  .big-heart::after{top:-37px}
+  @keyframes beat{0%,100%{transform:rotate(45deg) scale(1)}45%{transform:rotate(45deg) scale(1.09)}}
+
+  h1{
+    font-family:var(--font-display);
+    font-weight:400;
+    font-size:clamp(2rem,6vw,3rem);
+    color:var(--rose);
+    line-height:1.25;
+    margin-bottom:14px;
+  }
+  .lead{
+    font-size:clamp(1rem,2.6vw,1.15rem);
+    color:var(--ink-soft);
+    line-height:1.75;
+    max-width:46ch;margin:0 auto 6px;
+  }
+  .kaomoji{font-size:1.4rem;margin:14px 0 26px;letter-spacing:.05em}
+
+  /* ---------- Button ---------- */
+  .btn{
+    font-family:var(--font-body);font-weight:700;font-size:clamp(1rem,2.6vw,1.1rem);
+    color:#fff;border:0;cursor:pointer;
+    padding:16px 32px;border-radius:999px;
+    background:linear-gradient(135deg,var(--blush-deep),var(--lavender-deep));
+    box-shadow:0 14px 30px -10px rgba(168,146,240,.8);
+    transition:transform .25s cubic-bezier(.2,.8,.25,1),box-shadow .25s ease,opacity .25s ease;
+    animation:pulse 2.4s ease-in-out infinite;
+  }
+  .btn:hover{transform:translateY(-3px) scale(1.03)}
+  .btn:active{transform:scale(.97)}
+  .btn:disabled{cursor:default;opacity:.65;animation:none}
+  @keyframes pulse{
+    0%,100%{box-shadow:0 14px 30px -10px rgba(168,146,240,.8)}
+    50%{box-shadow:0 18px 44px -8px rgba(255,157,187,.95)}
+  }
+
+  /* ---------- Counter ---------- */
+  .counter{
+    margin-top:26px;font-weight:600;color:var(--rose);
+    font-variant-numeric:tabular-nums;letter-spacing:.02em;
+    opacity:0;transform:translateY(8px);
+    transition:opacity .4s ease,transform .4s ease;
+  }
+  .meter{
+    margin:10px auto 0;width:min(320px,100%);height:9px;border-radius:999px;
+    background:rgba(255,255,255,.7);overflow:hidden;
+  }
+  .meter span{display:block;height:100%;width:0;border-radius:999px;
+    background:linear-gradient(90deg,var(--blush-deep),var(--lavender-deep));
+    transition:width .2s linear}
+
+  /* ---------- Sorry scroller ---------- */
+  .scroller{
+    margin-top:22px;max-height:0;opacity:0;overflow:hidden;
+    transition:max-height .7s cubic-bezier(.2,.8,.25,1),opacity .5s ease;
+  }
+  .scroller.open{max-height:340px;opacity:1}
+  .scroller-inner{
+    max-height:340px;overflow-y:auto;
+    text-align:left;padding:18px 20px;
+    border-radius:20px;
+    background:rgba(255,255,255,.45);
+    border:1px solid var(--border);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    color:var(--ink-soft);
+    font-size:.95rem;line-height:1.9;
+    white-space:pre-wrap;word-break:break-word;
+    contain:content;
+  }
+  .scroller-inner::-webkit-scrollbar{width:10px}
+  .scroller-inner::-webkit-scrollbar-track{background:rgba(255,255,255,.4);border-radius:999px}
+  .scroller-inner::-webkit-scrollbar-thumb{
+    background:linear-gradient(180deg,var(--blush-deep),var(--lavender-deep));border-radius:999px;
+  }
+  .scroller-inner{scrollbar-width:thin;scrollbar-color:var(--blush-deep) rgba(255,255,255,.4)}
+
+  .footnote{margin-top:20px;font-size:.85rem;color:var(--ink-soft);opacity:.85}
+
+  /* Hidden audio player */
+  #player-wrap{position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;
+    opacity:0;pointer-events:none;transform:scale(0)}
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition-duration:.01ms!important}
+  }
+</style>
+</head>
+<body>
+
+<!-- Decorative floating hearts -->
+<div class="hearts" id="hearts" aria-hidden="true"></div>
+
+<main class="card">
+  <div class="big-heart" aria-hidden="true"></div>
+  <h1>I made a mistake.<br />Please forgive me?</h1>
+  <p class="lead">
+    I've been thinking about it all day, and I hate that I hurt you.
+    You matter more to me than being right ever could. So I wrote you something —
+    one hundred thousand little apologies, one for every time I'd say it out loud if you let me.
+  </p>
+  <p class="kaomoji" aria-hidden="true">(｡•́︿•̀｡) 💗</p>
+
+  <button class="btn" id="sorryBtn">Click to see how sorry I am</button>
+
+  <p class="counter" id="counter">Sincerity Level: 0 / 100,000</p>
+  <div class="meter" aria-hidden="true"><span id="meterFill"></span></div>
+
+  <section class="scroller" id="scroller" aria-live="polite">
+    <div class="scroller-inner" id="scrollerInner"></div>
+  </section>
+
+  <p class="footnote">…and I'd write a hundred thousand more. 🌸</p>
+</main>
+
+<!-- Hidden background music (YouTube IFrame API) -->
+<div id="player-wrap" aria-hidden="true"><div id="ytplayer"></div></div>
+
+<script>
+/* =========================================================
+   1. Floating hearts — a small, fixed pool of elements
+   ========================================================= */
+(function spawnHearts(){
+  const layer = document.getElementById('hearts');
+  const COUNT = 14;
+  const frag = document.createDocumentFragment();
+  for (let i = 0; i < COUNT; i++){
+    const h = document.createElement('div');
+    h.className = 'heart';
+    h.style.left = Math.random() * 100 + 'vw';
+    h.style.animationDuration = (11 + Math.random() * 10) + 's';
+    h.style.animationDelay = (-Math.random() * 18) + 's';
+    h.style.setProperty('--drift', (Math.random() * 120 - 60) + 'px');
+    const s = 0.5 + Math.random();
+    h.style.width = h.style.height = (18 * s) + 'px';
+    frag.appendChild(h);
+  }
+  layer.appendChild(frag);
+})();
+
+/* =========================================================
+   2. Hidden YouTube background music (no user controls)
+   ========================================================= */
+const VIDEO_ID = 'f8u6riOK3Qk';
+let ytPlayer = null;
+let ytReady = false;
+let musicRequested = false;
+
+// Load the IFrame API asynchronously.
+(function loadYT(){
+  const tag = document.createElement('script');
+  tag.src = 'https://www.youtube.com/iframe_api';
+  document.head.appendChild(tag);
+})();
+
+window.onYouTubeIframeAPIReady = function(){
+  ytPlayer = new YT.Player('ytplayer', {
+    videoId: VIDEO_ID,
+    playerVars: {
+      autoplay: 0, controls: 0, disablekb: 1, fs: 0,
+      modestbranding: 1, rel: 0, playsinline: 1,
+      loop: 1, playlist: VIDEO_ID   // playlist=self is required for loop
+    },
+    events: {
+      onReady(){
+        ytReady = true;
+        if (musicRequested) startMusic();
+      },
+      // Belt & braces: if it ever ends, play it again.
+      onStateChange(e){
+        if (e.data === YT.PlayerState.ENDED) ytPlayer.playVideo();
+      }
+    }
+  });
+};
+
+function startMusic(){
+  musicRequested = true;
+  if (!ytReady || !ytPlayer) return;      // will start on ready
+  ytPlayer.unMute();
+  ytPlayer.setVolume(100);
+  ytPlayer.playVideo();
+}
+
+/* =========================================================
+   3. The 100,000 sorries — progressive, chunked rendering
+   -------------------------------------------------------
+   100,000 DOM nodes would kill the browser. Instead we build
+   plain-text chunks and append them as text nodes inside one
+   container, one chunk per animation frame. That keeps the
+   main thread free and the page buttery smooth.
+   ========================================================= */
+const TOTAL      = 100000;
+const CHUNK      = 2000;               // sorries per frame
+const PHRASE     = 'I am Sorry. ';
+
+const btn       = document.getElementById('sorryBtn');
+const counterEl = document.getElementById('counter');
+const meterFill = document.getElementById('meterFill');
+const scroller  = document.getElementById('scroller');
+const target    = document.getElementById('scrollerInner');
+
+const fmt = n => n.toLocaleString('en-US');
+
+btn.addEventListener('click', function onApologise(){
+  btn.disabled = true;
+  btn.textContent = 'Writing them all out… 💌';
+
+  startMusic();                        // bound to the user gesture
+  scroller.classList.add('open');
+  counterEl.style.opacity = '1';
+  counterEl.style.transform = 'none';
+
+  let written = 0;
+  const chunkText = PHRASE.repeat(CHUNK);   // built once, reused
+
+  function renderChunk(){
+    const remaining = TOTAL - written;
+    const size = Math.min(CHUNK, remaining);
+    const frag = document.createDocumentFragment();
+    frag.appendChild(
+      document.createTextNode(size === CHUNK ? chunkText : PHRASE.repeat(size))
+    );
+    target.appendChild(frag);
+
+    written += size;
+    counterEl.textContent = 'Sincerity Level: ' + fmt(written) + ' / ' + fmt(TOTAL);
+    meterFill.style.width = (written / TOTAL * 100) + '%';
+
+    if (written < TOTAL){
+      requestAnimationFrame(renderChunk);
+    } else {
+      target.normalize();               // collapse into a single text node
+      btn.textContent = 'That\u2019s 100,000 sorries \u2014 and counting 💗';
+      counterEl.textContent = 'Sincerity Level: 100,000 / 100,000 \u2014 maxed out 🥺';
+    }
+  }
+
+  requestAnimationFrame(renderChunk);
+});
+</script>
+</body>
+</html>

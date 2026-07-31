@@ -1,24 +1,40 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "I'm Sorry — 100,000 Times" },
+      {
+        name: "description",
+        content:
+          "A cute, heartfelt apology micro-site that writes 'I am Sorry' one hundred thousand times.",
+      },
+      { property: "og:title", content: "I'm Sorry — 100,000 Times" },
+      {
+        property: "og:description",
+        content: "One hundred thousand little apologies, just for you.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
+// The whole experience lives in a single self-contained file: /sorry.html
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <iframe
+      src="/sorry.html"
+      title="An apology, one hundred thousand times"
+      style={{
+        position: "fixed",
+        inset: 0,
+        width: "100%",
+        height: "100%",
+        border: "none",
+      }}
+      allow="autoplay; encrypted-media"
+    />
   );
 }
