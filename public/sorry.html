@@ -78,21 +78,21 @@
   }
   @keyframes card-in{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
 
-  /* Big CSS heart */
-  .big-heart{
-    width:74px;height:74px;margin:0 auto 18px;position:relative;
-    background:linear-gradient(160deg,var(--blush-deep),var(--rose));
-    transform:rotate(45deg);border-radius:8px;
-    box-shadow:0 12px 30px -8px rgba(229,105,143,.7);
-    animation:beat 1.9s ease-in-out infinite;
+  /* Broken heart PNG that bounces */
+  .broken-heart{
+    display:block;width:clamp(96px,22vw,132px);height:auto;
+    margin:0 auto 18px;
+    filter:drop-shadow(0 14px 26px rgba(229,105,143,.45));
+    animation:bounce 1.6s cubic-bezier(.28,.84,.42,1) infinite;
+    will-change:transform;
   }
-  .big-heart::before,.big-heart::after{
-    content:"";position:absolute;width:74px;height:74px;border-radius:50%;
-    background:linear-gradient(160deg,var(--blush-deep),var(--rose));
+  @keyframes bounce{
+    0%,100%{transform:translateY(0) scale(1,1)}
+    25%{transform:translateY(-16px) scale(.97,1.04)}
+    50%{transform:translateY(0) scale(1.05,.94)}
+    70%{transform:translateY(-6px) scale(1,1)}
   }
-  .big-heart::before{left:-37px}
-  .big-heart::after{top:-37px}
-  @keyframes beat{0%,100%{transform:rotate(45deg) scale(1)}45%{transform:rotate(45deg) scale(1.09)}}
+
 
   h1{
     font-family:var(--font-display);
@@ -186,7 +186,7 @@
 <div class="hearts" id="hearts" aria-hidden="true"></div>
 
 <main class="card">
-  <div class="big-heart" aria-hidden="true"></div>
+  <img class="broken-heart" src="/__l5e/assets-v1/3b1640bd-f6b2-4a23-a1bd-07af347707d8/broken-heart.png" alt="A cracked pink heart" width="512" height="512" />
   <h1>I made a mistake.<br />Please forgive me?</h1>
   <p class="lead">
     I've been thinking about it all day, and I hate that I hurt you.
